@@ -1,0 +1,15 @@
+{
+    "name": "owl/repo_poo",
+    "autoload": {
+        "psr-4": {
+            "Owl\\RepoPoo\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "JhonanCaleb",
+            "email": "jhonancalebm@gmail.com"
+        }
+    ],
+    "require": {}
+}
