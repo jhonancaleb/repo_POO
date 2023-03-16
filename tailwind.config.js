@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js}","./src/View/**/*{html,js}"],
+  content: [
+    "./src/**/*.{html,js}",
+    "./src/View/**/*.{html,js}",
+    "./src/View/student/*.{html,js}",
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -16,9 +20,10 @@ module.exports = {
         c_gray: "#5f697d",
       },
       backgroundImage: {
-        'bg-login': "url('https://sinfo.senati.edu.pe/_wfm/files/cdn/sinfo/auth/senati-login-background.jpg')",
-      }
+        "bg-login":
+          "url('https://sinfo.senati.edu.pe/_wfm/files/cdn/sinfo/auth/senati-login-background.jpg')",
+      },
     },
   },
   plugins: [],
-}
+};
