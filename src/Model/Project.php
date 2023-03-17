@@ -19,27 +19,16 @@ class Project extends Conexion
   {
     $this->conexion = new Conexion();
   }
-  public function upload($titulo, $tipo, $descripcion, $autores, $carreraId, $instructorId, $fecha)
-  {
-    $arrayAuthors = explode(",", $autores);
-    // validacion de si ya subio un proyecto
-    $sql_val = "SELECT * FROM proyectos";
-    $projects = $this->conexion->consultar($sql_val);
-    foreach ($projects as $proj) {
-      $arrProAuthors = explode(",", $proj["autores"]);
-      $inters = array_intersect($arrayAuthors, $arrProAuthors);
-      $inters ? $res = false : $res = true;
-    }
-    if (!$res) return $res;
-    else {
-      $sql = "INSERT INTO proyectos (titulo,tipo,descripcion,autores,carreraId,instructorId,fecha_pres) VALUES('$titulo',$tipo,'$descripcion','$autores',$carreraId,$instructorId,'$fecha')";
+  public function upload($titulo, $tipo, $descripcion, $autores,$fileRute, $carreraId, $instructorId, $fecha){
+      $id = uniqid("p_");
+      $sql = "INSERT INTO proyectos(proyectoId,titulo,tipo,descripcion,autores,archivoRoute,carreraId,instructorId,fecha_pres) VALUES('$id','$titulo',$tipo,'$descripcion','$autores','$fileRute',$carreraId,$instructorId,'$fecha')";
       $this->conexion->ejecutar($sql);
 
-      // $sql_d = "INSERT INTO detalleProyecto(proyectoId,estado) VALUES($proyectoId,1)";
-      // $this->conexion->ejecutar($sql_d);
+      $sql_d = "INSERT INTO detalleProyecto(proyectoId,estado) VALUES('$id',1)";
+      $this->conexion->ejecutar($sql_d);
 
       return true;
-    }
+
   }
   public function setState($id, $state)
   {
@@ -54,7 +43,7 @@ class Project extends Conexion
   }
   public function getProjUser(int $userId)
   {
-    $sql = "SELECT * FROM proyectos";
+    $sql = "SELECT p.proyectoId,p.titulo,p.tipo,p.descripcion,p.autores,dp.estado FROM proyectos p INNER JOIN detalleproyecto dp ON p.proyectoId=dp.proyectoId";
     $projects = $this->conexion->consultar($sql);
     $projs = [];
     foreach ($projects as $project) {

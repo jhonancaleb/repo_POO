@@ -16,8 +16,14 @@ $ObjProject = new Project;
 
 $project = $ObjProject->getProjUser($userId);
 
-// $fileBlob=$project["archivo"];
-// $project["archivo"]=base64_encode($fileBlob);
+$typePro = ["", "INNOVACIÓN", "MEJORA", "CREATIVIDAD"];
+$stateColor= ["red", "black", "orange", "purple","blue","cyan","pink","gray","green"];
+$state= ["CANCELADO", "ENVIADO", "OBSERVADO", "CORREGIDO","REVISADO","SUSTENTACIÓN","DESAPROBADO","APROBADO","SUBIDO"];
+
+
+$project[0]["tipo"]=$typePro[$project[0]["tipo"]];
+$project[0]["clr"]=$stateColor[$project[0]["estado"]];
+$project[0]["estado"]=$state[$project[0]["estado"]];
+
 // print_r($project);
 echo json_encode($project);
-// echo $project;
