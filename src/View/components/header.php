@@ -7,6 +7,6 @@
   <script src="https://unpkg.com/phosphor-icons"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="shortcut icon" href="http://localhost/repo_poo/src/assets/iconLogo.png" type="image/x-icon">
-  <link href="http://localhost/repo_poo/src/output.css" rel="stylesheet" />
+  <link href="http://localhost/repo_poo/src/assets/student.css" rel="stylesheet" />
   <title>Upload Sen</title>
 </head>

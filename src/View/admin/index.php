@@ -5,7 +5,7 @@
   include_once("./../components/header.php");
 ?>
 <body>
-  instructor
+  Admin
   <?php 
     print_r($_SESSION);
   ?>
