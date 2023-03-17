@@ -4,53 +4,40 @@ iconUser.addEventListener("click", (e) => {
 });
 
 // toggle de formulario
-const box = document.querySelector(".formBox");
+const box = document.querySelector(".formBackground");
 
 function toggleForm() {
-  box.classList.toggle("flex");
-  box.classList.toggle("hidden");
+  box.classList.toggle("show");
   formUpload.reset();
 }
 document.addEventListener("mouseup", function (event) {
-  if (box.classList.contains("flex") && !formUpload.contains(event.target))
+  if (box.classList.contains("show") && !formUpload.contains(event.target))
     toggleForm();
 });
-upload.addEventListener("click", toggleForm);
+const btnUpload = document.getElementById("upload");
+btnUpload.addEventListener("click", toggleForm);
 closeForm.addEventListener("click", toggleForm);
 
 //PETICIONES FECTH
 async function getProjects(userId) {
   try {
-    const response = await fetch(
-      "http://localhost/repo_poo/src/Controller/CtrlGetProUser.php",
-      {
-        method: "POST",
-        body: new URLSearchParams("userId=" + userId),
-      }
-    );
+    const response = await fetch("http://localhost/repo_poo/src/Controller/CtrlGetProUser.php",{
+      method: "POST",
+      body: new URLSearchParams("userId=" + userId),
+    });
     if (response.ok) {
       const jsonData = await response.json();
       console.log(jsonData);
-      const boxProject = document.getElementById("projectBox");
-      const typePro = ["", "INNOVACIÓN", "MEJORA", "CREATIVIDAD"];
+      const boxProject = document.getElementById("projectsBox");
       jsonData.forEach((project) => {
-        // boxProject.insertAdjacentHTML(
-        //   "afterbegin",
-        //   `
-        // <article class="project">
-        //       <strong>${project.titulo}</strong>
-        //       <p>PROYECTO DE ${typePro[project.tipo]}</p>
-        //       <span style="--cl:black;">SUBIDO</span>
-        // </article>
-        // `
-        // );
-        boxProject.innerHTML=  `
-        <article class="project">
-              <strong>${project.titulo}</strong>
-              <p>PROYECTO DE ${typePro[project.tipo]}</p>
-              <span style="--cl:black;">SUBIDO</span>
+        boxProject.innerHTML = `
+        <article class="project" style="--cl:${project.clr}">   
+          <h1 class="project__title">${project.titulo}</h1>
+          <h2 class="project__type">PROYECTO DE ${project.tipo}</h2>
+          <p class="project__descri">${project.descripcion}</p>
+          <span class="project__state">${project.estado}</span>
         </article>
-        `
+        `;
       });
     }
   } catch (error) {
@@ -74,6 +61,7 @@ async function getFile(userId) {
     console.log("Ocurrio un error: " + error.message);
   }
 }
+
 const form = document.getElementById("formUpload");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -89,7 +77,8 @@ form.addEventListener("submit", async (e) => {
       const res = await response.text();
       getProjects(userId);
       console.log(res);
-      if (res== "ok") {
+      if (res == "ok") {
+        toggleForm();
         Swal.fire({
           position: "center",
           icon: "success",
@@ -97,7 +86,7 @@ form.addEventListener("submit", async (e) => {
           showConfirmButton: false,
           timer: 1500,
         });
-      } else if (res== "exist") {
+      } else if (res == "exist") {
         Swal.fire({
           icon: "error",
           title: "Oops...",
