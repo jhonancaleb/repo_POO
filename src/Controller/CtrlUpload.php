@@ -32,11 +32,11 @@ if (
   echo "vacio";
 }
 
-$filename = $_FILES['file']['name'];
+$filename = strtotime("now") . "_" . $_FILES['file']['name'];
 $file_tmp = $_FILES['file']['tmp_name'];
 
 // Mover el archivo a una ubicación permanente en el servidor
-$dir_destiny = '../archivos/';
+$dir_destiny = '../uploads/files_projects/';
 $fileRute = $dir_destiny . $filename;
 move_uploaded_file($file_tmp, $fileRute);
 
@@ -51,8 +51,7 @@ foreach ($projects as $proj) {
   count($inters) > 0 ? $count = $count + 1 : "";
 }
 if ($count > 0) echo "exist";
-else{
-  $res = $ObjProject->upload($titulo, intval($tipo), $descri, $autores, $fileRute, intval($carreraId), intval($instructorId), $fecha);
+else {
+  $res = $ObjProject->upload($titulo, intval($tipo), $descri, $autores, $filename, intval($carreraId), intval($instructorId), $fecha);
   if ($res) echo "ok";
 }
-

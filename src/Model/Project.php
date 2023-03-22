@@ -19,9 +19,9 @@ class Project extends Conexion
   {
     $this->conexion = new Conexion();
   }
-  public function upload($titulo, $tipo, $descripcion, $autores,$fileRute, $carreraId, $instructorId, $fecha){
+  public function upload($titulo, $tipo, $descripcion, $autores,$filename, $carreraId, $instructorId, $fecha){
       $id = uniqid("p_");
-      $sql = "INSERT INTO proyectos(proyectoId,titulo,tipo,descripcion,autores,archivoRoute,carreraId,instructorId,fecha_pres) VALUES('$id','$titulo',$tipo,'$descripcion','$autores','$fileRute',$carreraId,$instructorId,'$fecha')";
+      $sql = "INSERT INTO proyectos(proyectoId,titulo,tipo,descripcion,autores,archivo,carreraId,instructorId,fecha_pres) VALUES('$id','$titulo',$tipo,'$descripcion','$autores','$filename',$carreraId,$instructorId,'$fecha')";
       $this->conexion->ejecutar($sql);
 
       $sql_d = "INSERT INTO detalleProyecto(proyectoId,estado) VALUES('$id',1)";
@@ -49,11 +49,7 @@ class Project extends Conexion
     foreach ($projects as $project) {
       $stringAuthors = $project["autores"];
       $arrayAuthors = explode(",", $stringAuthors);
-      if (in_array($userId, $arrayAuthors)) {
-        unset($project["archivo"]);
-        unset($project[5]);
-        array_push($projs, $project);
-      };
+      if (in_array($userId, $arrayAuthors)) array_push($projs, $project);
     }
     return $projs;
   }

@@ -108,7 +108,8 @@ include_once("./../components/header.php");
   </div>
   <script src="./script.js"></script>
   <script>
-    getProjects(<?php echo $_SESSION["userId"] ?>);
+    const userId=<?php echo $_SESSION["userId"] ?>;
+    getProjects(userId);
   </script>
 </body>
 </html>
